@@ -163,22 +163,18 @@
 
 				updateBgImg($('.bg'));
  
-        sendTodayWeatherRequest(LOCATION);
+		        sendTodayWeatherRequest(LOCATION);
 				sendFutureWeatherRequest(LOCATION);
 
-				var updateInterval = 1000 * 60 * 30;
+				var updateInterval = 1000 * 60 * 10;
 
 				$('input').val("").blur();
 
-				// 每隔30分钟更新当前天气实时情况
+				// 每隔10分钟更新天气情况
 				setInterval(function(){
+					sendFutureWeatherRequest(LOCATION);
 					sendTodayWeatherRequest(LOCATION);
 				},updateInterval);
-
-				if($('.time').text() === '00:00 am') {
-					sendFutureWeatherRequest(LOCATION);
-					return false;
-				}
 			}
 	 })
 
