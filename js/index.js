@@ -1,5 +1,6 @@
-
-	// //心知天气API签名认证
+	// clear warnings
+	console.clear();
+	// 心知天气API签名认证
   var UID = "U30962D0D3"; 
   var KEY = "lf992xgfn8fpiasj"; 
   var API = "https://api.seniverse.com/v3/weather/now.json"; // 获取实时天气
@@ -25,7 +26,6 @@
 	    }
 	}
 
-
 	function showPosition(position) {
 	    x =  position.coords.latitude;
 	    y = position.coords.longitude; 
@@ -47,9 +47,7 @@
 	}
 
 	var myCity = new BMap.LocalCity();
-	let res = myCity.get(myFun);
-
-
+	myCity.get(myFun);
 
 	// 以jsonp方式获取当前天气的数据
 	function sendTodayWeatherRequest(location) {
@@ -102,9 +100,10 @@
 
 				// 每隔10分钟更新天气情况
 				setInterval(function(){
-					sendFutureWeatherRequest(LOCATION);
 					sendTodayWeatherRequest(LOCATION);
-				},updateInterval);
+					sendFutureWeatherRequest(LOCATION);
+					console.log('location: ',LOCATION);
+				}, updateInterval);
 			}
 	 })
 
@@ -116,14 +115,14 @@
   }
 
 	// 实时更新时间
-	function getTime(){
+	function updateTime(){
   	var hours = new Date().getHours();
   	var minutes = new Date().getMinutes();
   	minutes = minutes >= 10 ? minutes : '0' + minutes;
   	hours = hours < 10 ? '0' + hours : hours;
   	var suffix = hours >= 12 ? 'pm' : 'am';
   	$('.time').text(hours+':'+minutes+' '+suffix);
-  	setTimeout(getTime, 30*1000);
+  	setTimeout(updateTime, 30*1000);
 	}
 
 	// 渲染当天天气视图
@@ -133,7 +132,7 @@
   	var city =location.name;
   	$('.city').text(city);
 
-  	getTime();
+  	updateTime();
 
   	var now = weatherInfo.now;
   	var temp = now.temperature;
